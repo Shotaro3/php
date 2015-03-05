@@ -7,19 +7,12 @@
 <body>
 
 <article>
-<style type="text/css" media="screen">
-ul,li {
-	border: 1px solid black;
-}	
-</style>
-<h1>入力フォーム</h1>
-<ol>
-	<li><?php $text ?＞</li>
-</ol>
-<input type="submit" value="go">
+<form action="./index.php" method="post" accept-charset="utf-8">
+<h1>SHELL COMMAND</h1>
+<input type="text" name="command" value=""/>
+<input type="submit" value="Go" accesskey="C">
 </form>
 </article>
-
 
 <article>
 <h1>入力フォーム</h1>
@@ -31,6 +24,13 @@ ul,li {
 	<li>text</li>
 	<li>text</li>	
 </ul>
+<input type="submit" value="GoToHELL">
+</form>
+</article>
+
+<article>
+<h1>GET</h1>
+<a href="?val=test" >test</a>
 <input type="submit" value="GoToHELL">
 </form>
 </article>

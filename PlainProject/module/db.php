@@ -1,114 +1,114 @@
 <?php
-class SimpleControlDB {
 
-	private static $link;
-	private static $DB_PATH;
-	private static $DB_NAME;
-	private static $DB_USER;
-	private static $DB_PSWD;
+// php_mysql使用
+//namespace mysql;
+class PhpMysql {
 
-	// MYSQL接続
-	protected static function startConnectionToDB() {
-		$this->link = mysql_connect($this->DB_PATH,
-			$this->DB_USER,
-			$this->DB_PSWD);
+	// 主要なデータの保持用
+	private $dbPath;
+	private $dbName;
+	private $dbUser;
+	private $dbPswd;
+
+	// 瑣末なデータの保持用
+	private $_linkId;
+	private $_result;
+
+	public function setProperty($DB_PATH, $DB_USER, $DB_PSWD) {
+		$this->dbPath = $DB_PATH;
+		$this->dbUser = $DB_USER;
+		$this->dbPswd = $DB_PSWD;
 	}
 
-	// 終了処理
-	protected static function closeConnectionFromDB() {
-		$this->op_flg = mysql_close($this->link);
+	// MYSQL接続
+	protected function connect() {
+		$this->_linkId = mysql_connect($this->dbPath, $this->dbUser, $this->dbPswd);
+	}
+
+	// 切断
+	protected function close() {
+		return mysql_close($this->$linkId);
+	}
+
+	// 接続先DB指定
+	protected function select($_dbName = '') {
+		$this->dbName = $_dbName != ''?$_dbName:$this->dbName;
+		mysqli_select_db($this->_linkId, $this->dbName);
+	}
+
+	// クエリ発行
+	protected function query($query) {
+		$_result = mysql_query($query);
+		return $_result;
+	}
+
+	// 実行結果取得
+	protected function assoc() {
+		return mysql_fetch_assoc($result);
 	}
 
 	// エラーメッセージ取得
-	protected static function mysqlError() {
+	protected function getError() {
 		return mysql_error();
 	}
 
 }
 
-class DB extends SimpleControlDB {
-	//	private $mode;
-	private $state;
-	private $operation;
+class MySQL extends PhpMysql {
 
 	public function __construct() {
-		// initialize
-		//
-
-		// うまいこと　処理→チェック　の繰り返しを出来る仕組みを作りたい
-		$this->state['stage'] = array(
-			'waning', 'unconnected', 'connected', );
-		$this->state['index'] = 1;
-
-		$this->operation = array(
-			'unconnected' => array(
-				'startConnectionToDB',
-			),
-		);
 	}
 
-	// 起動
-	public function begin() {
-		// // initialize
-		// $this->operation['index'] = 0;
+	// // 接続情報の登録
+	// public function registration($DB_PATH, $DB_USER, $DB_PSWD, $DB_NAME) {
+	// 	$_args = func_get_args();
+	// 	parent::setProperty($_args[0], $_args[1], $_args[2], $_args[3]);
+	//  parent::connect();
+	// }
 
-		// while (true) {
-		// 	// cache
-		// 	$s_index = $this->state['index'];
-		// 	$s_stage = $this->state['stage'][$s_index];
-		// 	$operate = $this->operation[$s_stage];
-
-		// 	if (!isset($operate[$this->operation['index']])) {
-		// 		break;
-		// 	}
-
-		// 	$result                   = false;
-		// 	$result                   = call_user_func($operate[$this->operation['index']]);
-		// 	$this->operation['index'] = $result?$this->operation['index']++:$this->operation['index'];
-		// }
-
-		self::operationCheck(__FUNCTION__);
+	// SELECT
+	public function select() {
 	}
 
-	// 動作管理
-	private function operationCheck($functionName) {
-
-		//		self::operationCheck(__FUNCTION__);
+	// INSERT
+	public function insert() {
 	}
 
-	private function tryingAgain() {
-
-		self::operationCheck(__FUNCTION__);
+	// UPDATE
+	public function uodate() {
 	}
 
-	private function Notification() {
-		$ct['er_msg'] = mysql_error();
-		self::operationCheck(__FUNCTION__);
-		// be notification if debug mode
+	// DELETE
+	public function delete() {
 	}
 
-	public function setProparty($DB_PATH, $DB_USER, $DB_PSWD) {
-		$this->DB_PATH = $DB_PATH;
-		$this->DB_USER = $DB_USER;
-		$this->DB_PSWD = $DB_PSWD;
-		self::operationCheck(__FUNCTION__);
+	// 接続
+	public function connectionStart($DB_PATH, $DB_USER, $DB_PSWD, $DB_NAME = '') {
+		$_args = func_get_args();
+		parent::setProperty($_args[0], $_args[1], $_args[2]);
+		parent::connect();
+
+		// TODO check Database can use
+
+		self::report();
+	}
+
+	// 切断
+	public function disConnection() {
+	}
+
+	// private function tryingAgain() {
+	// }
+
+	// 通知用
+	private function report() {
+		$_i   = parent::getError() == null?0:parent::getError();
+		$_msg = array('MYSQLエラーなし');
+
+		var_dump($_msg[$_i]);
 	}
 
 }
-
-// if ($ct['er_msg']) {
-//  die('問題が発生したのでスクリプトを停止します：'.$error_msg);
-// } else {
-//  mysql_query('CREATE DATABASE '.'sample_'.time());
-//  mysql_select_db(DB_NAME);
-//  $ct['er_msg'] = mysql_error();
-
-//  if ($ct['er_msg']) {
-//      die('問題が発生したのでスクリプトを停止します：'.$error_msg);
-//  } else {
-//      print('サクセス!');
-//  }
-// }
 
 // DB整備用のコマンドの定義体
 // %1 DB名

@@ -23,6 +23,22 @@ define('DB_NAME', 'sample');
 define('DB_USER', 'root');
 define('DB_PSWD', 'root');
 
-$db = new DB();
-$db->setProparty(DB_PATH, DB_USER, DB_PSWD);
-$db->begin();
+$db = new MySQL();
+$db->connectionStart(DB_PATH, DB_USER, DB_PSWD, DB_NAME);
+
+// var_dump($_POST);
+
+// // URL含みを管理したい時に使う
+// var_dump($_GET);
+// var_dump($_REQUEST);
+
+$ret;
+$com = $_POST['command'];
+
+// mkdir ls
+//excec() ;
+var_dump(exec($com, $ret).'<br>');
+
+var_dump($ret);
+
+require_once (dirname(__FILE__).'/plane.html');
