@@ -2,69 +2,133 @@
 
 // php_mysql使用
 //namespace mysql;
-class PhpMysql {
+interface DAO {
+	/**
+	 * MYSQL接続
+	 *
+	 * @param no argument
+	 */
+	public function open();
 
-	// 主要なデータの保持用
-	private $dbPath;
-	private $dbName;
-	private $dbUser;
-	private $dbPswd;
+	/**
+	 * 切断
+	 *
+	 * @param linkid is passed from connected databases is string
+	 */
+	public function quit($linkId);
 
-	// 瑣末なデータの保持用
-	private $_linkId;
-	private $_result;
+	/**
+	 * 接続先DB指定
+	 *
+	 * @param dbname is string type argument. value is that database name.
+	 */
+	public function useDb($dbName);
 
-	public function setProperty($DB_PATH, $DB_USER, $DB_PSWD) {
-		$this->dbPath = $DB_PATH;
-		$this->dbUser = $DB_USER;
-		$this->dbPswd = $DB_PSWD;
+	/**
+	 * クエリ発行
+	 *
+	 */
+	public function query($query);
+
+	/**
+	 * 実行結果取得
+	 *
+	 */
+	public function result();
+
+	// エラーメッセージ取得
+	/**
+	 * 実行結果取得
+	 *
+	 */
+	public function getError();
+
+}
+class PhpMysql implements DAO {
+	// 接続用データの保持用
+	protected static $dbPath;
+	protected static $dbName;
+	protected static $dbUser;
+	protected static $dbPswd;
+
+	public function __construct() {
+	}
+	/**
+	 * MYSQL接続
+	 *
+	 * @return is flag by execute. if successful true. if bad false.
+	 */
+	public function open() {
+		return mysql_connect(self::$dbPath, self::$dbUser, self::$dbPswd);
 	}
 
-	// MYSQL接続
-	protected function connect() {
-		$this->_linkId = mysql_connect($this->dbPath, $this->dbUser, $this->dbPswd);
+	/**
+	 * 切断
+	 *
+	 * @return is flag by execute. if successful true. if bad false.
+	 */
+	public function quit($linkId) {
+		return mysql_close($linkId);
 	}
 
-	// 切断
-	protected function close() {
-		return mysql_close($this->$linkId);
+	/**
+	 * 接続先DB指定
+	 *
+	 * @return is flag by execute. if successful true. if bad false.
+	 */
+	public function useDb($dbName) {
+		return mysqli_select_db($dbName);
 	}
 
-	// 接続先DB指定
-	protected function select($_dbName = '') {
-		$this->dbName = $_dbName != ''?$_dbName:$this->dbName;
-		mysqli_select_db($this->_linkId, $this->dbName);
+	/**
+	 * クエリ発行
+	 *
+	 * @return is flag by execute. if successful true. if bad false.
+	 */
+	public function query($query) {
+		return mysql_query($query) != false?true:false;
 	}
 
-	// クエリ発行
-	protected function query($query) {
-		$_result = mysql_query($query);
-		return $_result;
-	}
-
-	// 実行結果取得
-	protected function assoc() {
+	/**
+	 * 実行結果取得
+	 *
+	 * @return associative array or false
+	 */
+	public function result() {
 		return mysql_fetch_assoc($result);
 	}
 
 	// エラーメッセージ取得
-	protected function getError() {
-		return mysql_error();
+	/**
+	 * 実行結果取得
+	 *
+	 * @return string or false
+	 */
+	public function getError() {
+		return mysql_error() == ''?false:mysql_error();
 	}
 
 }
 
 class MySQL extends PhpMysql {
 
-	public function __construct() {
+	// クラスの主要なデータの保持用
+	private $query;
+
+	// クラスの瑣末なデータの保持用
+	private $_linkId;
+	private $_result;
+
+	public function setProperty($DB_PATH, $DB_USER, $DB_PSWD) {
+		parent::$dbPath = $DB_PATH;
+		parent::$dbUser = $DB_USER;
+		parent::$dbPswd = $DB_PSWD;
 	}
 
-	// // 接続情報の登録
-	// public function registration($DB_PATH, $DB_USER, $DB_PSWD, $DB_NAME) {
-	// 	$_args = func_get_args();
-	// 	parent::setProperty($_args[0], $_args[1], $_args[2], $_args[3]);
-	//  parent::connect();
-	// }
+	public function __construct() {
+		parent::__construct();
+
+	}
 
 	// SELECT
 	public function select() {
@@ -83,10 +147,10 @@ class MySQL extends PhpMysql {
 	}
 
 	// 接続
-	public function connectionStart($DB_PATH, $DB_USER, $DB_PSWD, $DB_NAME = '') {
+	public function connectionStart($DB_PATH, $DB_USER, $DB_PSWD, $DB_NAME) {
 		$_args = func_get_args();
-		parent::setProperty($_args[0], $_args[1], $_args[2]);
-		parent::connect();
+		self::setProperty($_args[0], $_args[1], $_args[2]);
+		parent::open();
 
 		// TODO check Database can use
 
@@ -105,7 +169,7 @@ class MySQL extends PhpMysql {
 		$_i   = parent::getError() == null?0:parent::getError();
 		$_msg = array('MYSQLエラーなし');
 
-		var_dump($_msg[$_i]);
+		var_dump(array('報告', $_msg[$_i], parent::getError()));
 	}
 
 }
