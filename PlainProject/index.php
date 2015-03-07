@@ -25,20 +25,31 @@ define('DB_PSWD', 'root');
 
 $db = new MySQL();
 $db->connectionStart(DB_PATH, DB_USER, DB_PSWD, DB_NAME);
+//$mysql_text = $db->report();
+//$mysql_text['database'] = $db->showDatabases();
+$mysql_text['database'] = $db->query('SHOW DATABASES');
 
-// var_dump($_POST);
+if (isset($_POST['database'])) {
+	$db->connectionStart(DB_PATH, DB_USER, DB_PSWD, $_POST['database']);
+	$mysql_text['table'] = $db->query('SHOW TABLES');
+
+}
 
 // // URL含みを管理したい時に使う
 // var_dump($_GET);
 // var_dump($_REQUEST);
 
-$ret;
-$com = $_POST['command'];
+// and ...true or String only
+
+//'a' and  or var_dump('<br>trueだよ<br>');
+
+// $ret;
+// $com = $_POST['command'];
 
 // mkdir ls
 //excec() ;
-var_dump(exec($com, $ret).'<br>');
+// var_dump(exec($com, $ret).'<br>');
 
-var_dump($ret);
+// var_dump($ret);
 
 require_once (dirname(__FILE__).'/plane.html');

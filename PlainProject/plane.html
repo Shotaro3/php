@@ -5,6 +5,32 @@
 	<title></title>
 </head>
 <body>
+<article>
+<h1>シャケだー</h1>
+おんどりゃ︎
+<textarea name="mysql" style="width:100%;height:10em;"><?php echo $mysql_text['resoce']; ?></textarea>
+サクセス‼︎
+<textarea name="mysql" style="width:100%;height:10em;"><?php echo var_dump($mysql_text); ?></textarea>
+じゃない︎
+<textarea name="mysql" style="width:100%;height:10em;"><?php echo $mysql_text['error']; ?></textarea>
+
+<form method="POST">
+<select name="database">
+<?php for ($i=0; $i < count($mysql_text['database']); $i++) {?>
+<option value="<?php echo $mysql_text['database'][$i] ?>"><?php echo $mysql_text['database'][$i] ?></option>
+<?php } ?>
+</select>
+
+<select name="table">
+<?php for ($i=0; $i < count($mysql_text['table']); $i++) {?>
+<option value="<?php echo $mysql_text['table'][$i] ?>"><?php echo $mysql_text['table'][$i] ?></option>
+<?php } ?>
+</select>
+
+<input type="submit" value="USE DB">
+</form>>
+
+</article>
 
 <article>
 <form action="./index.php" method="post" accept-charset="utf-8">
@@ -29,9 +55,8 @@
 </article>
 
 <article>
-<h1>GET</h1>
-<a href="?val=test" >test</a>
-<input type="submit" value="GoToHELL">
+<h1>POST</h1>
+<textarea name="mysql" style="width:100%;height:10em;"><?php var_dump($_POST); ?></textarea>
 </form>
 </article>
 

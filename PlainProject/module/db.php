@@ -1,4 +1,38 @@
 <?php
+trait Profile {
+	private static $count;
+
+	static private function flow($funcName, $value) {
+		echo '<br>'.$funcName.'=======================<br>';
+		echo '生成した値:'.($value);
+		echo '<br>====================================<br>';
+	}
+
+	protected static function isReturnValue($material) {
+		$_args = $material;
+		self::flow(__CLASS__ .' use::'.__METHOD__, $_args);
+	}
+
+}
+
+class _PlainSystem {
+	protected static function isReturnValue($material) {
+		self::$deliverable = $material and true;
+		self::$deliverable = $material or false;
+		return self::$deliverable;
+	}
+
+}
+
+class PlainSystem extends _PlainSystem {
+	use Profile;
+
+	private static $deliverable;
+
+	public function __construct() {
+		self::flow(__METHOD__, '使う');
+	}
+}
 
 // php_mysql使用
 //namespace mysql;
@@ -34,7 +68,7 @@ interface DAO {
 	 * 実行結果取得
 	 *
 	 */
-	public function result();
+	public function result($query_result);
 
 	// エラーメッセージ取得
 	/**
@@ -44,14 +78,20 @@ interface DAO {
 	public function getError();
 
 }
-class PhpMysql implements DAO {
+class PhpMysql extends PlainSystem {
+	//use PhpMyq;
 	// 接続用データの保持用
 	protected static $dbPath;
 	protected static $dbName;
 	protected static $dbUser;
 	protected static $dbPswd;
 
+	protected $resoce;
+	protected $result;
+	protected $linkId;
+
 	public function __construct() {
+		parent::__construct();
 	}
 	/**
 	 * MYSQL接続
@@ -59,7 +99,9 @@ class PhpMysql implements DAO {
 	 * @return is flag by execute. if successful true. if bad false.
 	 */
 	public function open() {
-		return mysql_connect(self::$dbPath, self::$dbUser, self::$dbPswd);
+		$this->linkId = mysql_connect(self::$dbPath, self::$dbUser, self::$dbPswd);
+		self::useDb(self::$dbName);
+		return parent::isReturnValue($this->linkId);
 	}
 
 	/**
@@ -76,17 +118,17 @@ class PhpMysql implements DAO {
 	 *
 	 * @return is flag by execute. if successful true. if bad false.
 	 */
-	public function useDb($dbName) {
-		return mysqli_select_db($dbName);
+	public function useDb() {
+		return mysql_select_db(self::$dbName);
 	}
 
 	/**
 	 * クエリ発行
 	 *
-	 * @return is flag by execute. if successful true. if bad false.
+	 * @return mysql resoce or false.
 	 */
 	public function query($query) {
-		return mysql_query($query) != false?true:false;
+		return mysql_query($query);
 	}
 
 	/**
@@ -94,8 +136,33 @@ class PhpMysql implements DAO {
 	 *
 	 * @return associative array or false
 	 */
-	public function result() {
-		return mysql_fetch_assoc($result);
+	public function result($resoce) {
+		$reValue  = array();
+		$_reValue = array();
+		$_i       = 0;
+		while ($row = mysql_fetch_assoc($resoce)) {
+			$_reValue[] = array_values($row)[0];
+		}
+		$reValue['value'] = $_reValue;
+		return $reValue;
+	}
+
+	/**
+	 * クライアント文字コードの設定
+	 *
+	 * @return is bool
+	 */
+	public function charSet($char_code) {
+		return mysql_set_charset($char_code);
+	}
+
+	/**
+	 * 特殊文字のエスケープ
+	 *
+	 * @return associative array or false
+	 */
+	public function escape($unescaped_string) {
+		return mysql_real_escape_string($unescaped_string);
 	}
 
 	// エラーメッセージ取得
@@ -119,10 +186,15 @@ class MySQL extends PhpMysql {
 	private $_linkId;
 	private $_result;
 
-	public function setProperty($DB_PATH, $DB_USER, $DB_PSWD) {
+	public function setProperty($DB_PATH, $DB_USER, $DB_PSWD, $DB_NAME) {
 		parent::$dbPath = $DB_PATH;
 		parent::$dbUser = $DB_USER;
 		parent::$dbPswd = $DB_PSWD;
+		parent::$dbName = $DB_NAME;
+	}
+
+	public function setUsingDBName($DB_NAME) {
+		parent::$dbName = $DB_NAME;
 	}
 
 	public function __construct() {
@@ -146,15 +218,31 @@ class MySQL extends PhpMysql {
 	public function delete() {
 	}
 
+	// // SHOW DATABASES
+	// public function showDatabases() {
+	// 	$resoce = parent::query('SHOW DATABASES');
+	// 	$array  = parent::result($resoce);
+	// 	return $array['value'];
+	// }
+	// 仮作成
+	public function query($query) {
+		if (!empty(parent::$dbName)) {
+			parent::useDb();
+		}
+
+		$resoce = parent::query($query);
+		$array  = parent::result($resoce);
+		return $array['value'];
+	}
+
 	// 接続
 	public function connectionStart($DB_PATH, $DB_USER, $DB_PSWD, $DB_NAME) {
 		$_args = func_get_args();
-		self::setProperty($_args[0], $_args[1], $_args[2]);
-		parent::open();
+		self::setProperty($_args[0], $_args[1], $_args[2], $_args[3]);
+		$this->linkId = parent::open();
 
 		// TODO check Database can use
 
-		self::report();
 	}
 
 	// 切断
@@ -164,15 +252,29 @@ class MySQL extends PhpMysql {
 	// private function tryingAgain() {
 	// }
 
-	// 通知用
-	private function report() {
-		$_i   = parent::getError() == null?0:parent::getError();
-		$_msg = array('MYSQLエラーなし');
-
-		var_dump(array('報告', $_msg[$_i], parent::getError()));
-	}
-
 }
+
+// class Generate implements Safeties {
+
+// 	public function __construct() {
+// 		//$standard = new Standard();
+
+// 	}
+
+// 	public static function String($material) {
+
+// 		return $deliverable;
+// 	}
+
+// }
+// // 定義値の規格
+// interface Variable {
+// 	//
+// }
+// 定義のリストです
+//class Standard implements Variable {
+//
+//}
 
 // DB整備用のコマンドの定義体
 // %1 DB名
