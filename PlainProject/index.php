@@ -4,6 +4,52 @@ ini_set('display_errors', '1');
 
 require_once (dirname(__FILE__).'/module/db.php');
 
+abstract class controler {
+
+	function __construct() {
+		$this->step1();
+	}
+
+	abstract function step1();
+	abstract function step2();
+	abstract function step3();
+	abstract function step4();
+
+}
+
+class domain extends controler {
+
+	function __construct() {
+		parent::__construct();
+	}
+
+	function step1() {
+		echo 'step1';
+	}
+	function step2() {
+		echo 'step2';
+	}
+	function step3() {
+		echo 'step3';
+	}
+	function step4() {
+		echo 'step4';
+	}
+
+}
+
+class PlainSystem {
+	private $dm;
+
+	function __construct() {
+		$this->dm = new domain();
+
+	}
+
+}
+
+new PlainSystem();
+exit;
 // session_start();
 
 //  セッション系
@@ -24,14 +70,14 @@ define('DB_USER', 'root');
 define('DB_PSWD', 'root');
 
 $db = new MySQL();
-$db->connectionStart(DB_PATH, DB_USER, DB_PSWD, DB_NAME);
-//$mysql_text = $db->report();
-//$mysql_text['database'] = $db->showDatabases();
-$mysql_text['database'] = $db->query('SHOW DATABASES');
+$db->set_property(DB_PATH, DB_USER, DB_PSWD, DB_NAME);
+$db->open();
+$mysql_text['database'] = $db->put_query('SHOW DATABASES');
 
 if (isset($_POST['database'])) {
-	$db->connectionStart(DB_PATH, DB_USER, DB_PSWD, $_POST['database']);
-	$mysql_text['table'] = $db->query('SHOW TABLES');
+	$db->change_use_database($_POST['database']);
+	$db->open();
+	$mysql_text['table'] = $db->put_query('SHOW TABLES');
 
 }
 
