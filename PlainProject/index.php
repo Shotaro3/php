@@ -70,6 +70,7 @@ class PlainSystem {
 
 		// 親に持っていく
 		// 各ドメインからユーザーに問い合わせをするタイミングを定義する
+		// 問い合わせが必要なしであれば次の問い合わせタイミングまで実行する(画面生成を求めない)
 		$this->flow = array(
 			'katakana' => array(self::ASK, self::ASK, self::ASK, self::ASK, self::ASK),
 			'hiragana' => array(self::ASK, self::ASK, self::ASK, self::ASK, self::ASK)
