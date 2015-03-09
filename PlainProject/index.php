@@ -6,11 +6,15 @@ require_once (dirname(__FILE__).'/module/db.php');
 
 //処理深さ　コントローラー　ステップ構造の管理のみ
 abstract class controler {
+	//
+	//システムのフローで問い合わせ（ASK）があるまで実行するようにすること
 	function __construct($system) {
 		$system->test = $this->step1();
 	}
-
-	abstract function step1();// 対話　　　必要な項目の通知
+	// 各ステップは必ず通ること
+	// 対話を求めることがシステムから指定されている場合、ユーザーへの質問を返すこと
+	// エラーがある場合、、固有処理がなければ共通処理に委託したい
+	abstract function step1();// 対話開始　必要な項目の通知
 	abstract function step2();// 精査　　　入力内容のチェック・意訳
 	abstract function step3();// 事前確認　実行する内容の通知
 	abstract function step4();// 実行　　　実行結果の通知
