@@ -26,19 +26,19 @@ class domain extends controler {
 	}
 
 	function step1() {
-		echo 'DB操作するのかー';
+		return 'DB操作するのかー';
 	}
 	function step2() {
-		echo 'クエリはただしいのかー';
+		return 'クエリはただしいのかー';
 	}
 	function step3() {
-		echo '実行内容にもんだいないのかー';
+		return '実行内容にもんだいないのかー';
 	}
 	function step4() {
-		echo 'そうなのかー';
+		return 'そうなのかー';
 	}
 	function step5() {
-		echo 'コミットしていいのかー';
+		return 'コミットしていいのかー';
 	}
 
 }
