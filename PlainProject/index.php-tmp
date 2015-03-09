@@ -4,18 +4,17 @@ ini_set('display_errors', '1');
 
 require_once (dirname(__FILE__).'/module/db.php');
 
-
 //処理深さ　コントローラー　ステップ構造の管理のみ
 abstract class controler {
 	function __construct() {
 		$this->step1();
 	}
 
-	abstract function step1(); // 対話　　　必要な項目の通知
-	abstract function step2(); // 精査　　　入力内容のチェック・意訳
-	abstract function step3(); // 事前確認　実行する内容の通知
-	abstract function step4(); // 実行　　　実行結果の通知
-	abstract function step4(); // 終了　　　切り戻しが必要か確認なければ終了
+	abstract function step1();// 対話　　　必要な項目の通知
+	abstract function step2();// 精査　　　入力内容のチェック・意訳
+	abstract function step3();// 事前確認　実行する内容の通知
+	abstract function step4();// 実行　　　実行結果の通知
+	abstract function step4();// 終了　　　切り戻しが必要か確認なければ終了
 
 }
 
