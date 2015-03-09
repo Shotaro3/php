@@ -45,11 +45,98 @@ class domain extends controler {
 
 //　処理のフロー管理　フロー定義体と状況把握のみ
 class PlainSystem {
-	private $dm;
+	//フローと現在地の管理用
+	use flow;
+	//ドメインからの問い合わせ項目の保持
+	use querys;
+
+	// 処理系
+	private $common;
+	private $unique;
+
+	// 描画系
+	private $view;
+
+	//　インスタンス化するドメインの選択
+	function __construct() {
+
+		// 共通処理
+		if (false) {
+			$this->common = new domain($this);
+		}
+		//　単一
+		swicth() {
+			case 'katakana':
+			$this->unique = new katakana($this);
+			break;
+			case 'hiragana':
+			$this->unique = new hiragana($this);
+			break;
+		}
+		// 画面出力
+		$this->view;
+	}
+
+}
+
+trait frow {
+
+}
+trait query {
+
+}
+
+class katakana extends controler {
 
 	function __construct() {
-		$this->dm = new domain();
+		parent::__construct();
+	}
+	function step1() {
+		echo 'ステップ1';
+		return　true;
+	}
+	function step2() {
+		echo 'ステップ2';
+		return　true;
+	}
+	function step3() {
+		echo 'ステップ3';
+		return　true;
+	}
+	function step4() {
+		echo 'ステップ4';
+		return　true;
+	}
+	function step5() {
+		echo 'ステップ5';
+		return　true;
+	}
 
+}
+class hiragana extends controler {
+
+	function __construct() {
+		parent::__construct();
+	}
+	function step1() {
+		echo 'すてっぷ1';
+		return　true;
+	}
+	function step2() {
+		echo 'すてっぷ2';
+		return　true;
+	}
+	function step3() {
+		echo 'すてっぷ3';
+		return　true;
+	}
+	function step4() {
+		echo 'すてっぷ4';
+		return　true;
+	}
+	function step5() {
+		echo 'すてっぷ5';
+		return　true;
 	}
 
 }
