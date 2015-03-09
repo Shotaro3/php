@@ -6,39 +6,39 @@ require_once (dirname(__FILE__).'/module/db.php');
 
 //処理深さ　コントローラー　ステップ構造の管理のみ
 abstract class controler {
-	function __construct() {
-		$this->step1();
+	function __construct($system) {
+		$system->test = $this->step1();
 	}
 
 	abstract function step1();// 対話　　　必要な項目の通知
 	abstract function step2();// 精査　　　入力内容のチェック・意訳
 	abstract function step3();// 事前確認　実行する内容の通知
 	abstract function step4();// 実行　　　実行結果の通知
-	abstract function step4();// 終了　　　切り戻しが必要か確認なければ終了
+	abstract function step5();// 終了　　　切り戻しが必要か確認なければ終了
 
 }
 
 //処理の幅　ドメイン　機能の種類でモデルを利用する
 class domain extends controler {
 
-	function __construct() {
-		parent::__construct();
+	function __construct($system) {
+		parent::__construct($system);
 	}
 
 	function step1() {
-		echo 'step1';
+		echo 'DB操作するのかー';
 	}
 	function step2() {
-		echo 'step2';
+		echo 'クエリはただしいのかー';
 	}
 	function step3() {
-		echo 'step3';
+		echo '実行内容にもんだいないのかー';
 	}
 	function step4() {
-		echo 'step4';
+		echo 'そうなのかー';
 	}
 	function step5() {
-		echo 'step5';
+		echo 'コミットしていいのかー';
 	}
 
 }
@@ -46,9 +46,9 @@ class domain extends controler {
 //　処理のフロー管理　フロー定義体と状況把握のみ
 class PlainSystem {
 	//フローと現在地の管理用
-	use flow;
+	// use flow;
 	//ドメインからの問い合わせ項目の保持
-	use querys;
+	// use querys;
 
 	// 処理系
 	private $common;
@@ -56,87 +56,106 @@ class PlainSystem {
 
 	// 描画系
 	private $view;
+	public $test;
+
+	// 親に持っていく
+	const ASK     = 1;
+	const NOT_ASK = 0;
+	private $flow;
+	private $step;
 
 	//　インスタンス化するドメインの選択
 	function __construct() {
+		$this->test = "test";
+
+		// 親に持っていく
+		// 各ドメインからユーザーに問い合わせをするタイミングを定義する
+		$this->flow = array(
+			'katakana' => array(self::ASK, self::ASK, self::ASK, self::ASK, self::ASK),
+			'hiragana' => array(self::ASK, self::ASK, self::ASK, self::ASK, self::ASK)
+		);
+		// イニシャライズクラスが必要
+		$this->step = array(
+			'katakana' => 0,
+			'hiragana' => 0,
+		);
 
 		// 共通処理
-		if (false) {
-			$this->common = new domain($this);
-		}
-		//　単一
-		swicth() {
-			case 'katakana':
-			$this->unique = new katakana($this);
-			break;
-			case 'hiragana':
-			$this->unique = new hiragana($this);
-			break;
-		}
-		// 画面出力
-		$this->view;
+		// if (false) {
+		$this->common = new domain($this);
+		echo 'kakunin:'.$this->test;
+		// }
+		// //　単一
+		// swicth() {
+		//     case 'katakana':
+		$this->unique = new katakana($this);
+		//     break;
+		//     case 'hiragana':
+		$this->unique = new hiragana($this);
+		//     break;
+		// }
+		// // 画面出力
+		// $this->view;
 	}
 
 }
 
-trait frow {
-
-}
-trait query {
-
-}
+// trait frow {
+// }
+// trait query {
+// }
 
 class katakana extends controler {
 
-	function __construct() {
-		parent::__construct();
+	function __construct($system) {
+		parent::__construct($system);
 	}
 	function step1() {
 		echo 'ステップ1';
-		return　true;
+		return true;
 	}
 	function step2() {
 		echo 'ステップ2';
-		return　true;
+		return true;
 	}
 	function step3() {
 		echo 'ステップ3';
-		return　true;
+		return true;
 	}
 	function step4() {
 		echo 'ステップ4';
-		return　true;
+		return true;
 	}
 	function step5() {
 		echo 'ステップ5';
-		return　true;
+		return true;
 	}
 
 }
 class hiragana extends controler {
 
-	function __construct() {
-		parent::__construct();
+	function __construct($system) {
+		parent::__construct($system);
 	}
 	function step1() {
 		echo 'すてっぷ1';
-		return　true;
+		return true;
 	}
 	function step2() {
 		echo 'すてっぷ2';
-		return　true;
+		return true;
 	}
 	function step3() {
 		echo 'すてっぷ3';
-		return　true;
+		return true;
 	}
 	function step4() {
 		echo 'すてっぷ4';
-		return　true;
+		return true;
 	}
 	function step5() {
 		echo 'すてっぷ5';
-		return　true;
+		return true;
 	}
 
 }
