@@ -2,8 +2,9 @@
 ini_set('error_reporting', E_ALL);
 ini_set('display_errors', '1');
 
-require_once (dirname(__FILE__).'/module/db.php');
-
+// require_once (dirname(__FILE__).'/module/db.php');
+require_once (dirname(__FILE__).'/module/know.php');
+exit;
 //処理深さ　コントローラー　ステップ構造の管理のみ
 abstract class controler {
 	//
@@ -70,6 +71,7 @@ class PlainSystem {
 
 	//　インスタンス化するドメインの選択
 	function __construct() {
+
 		$this->test = "test";
 
 		// 親に持っていく
@@ -87,16 +89,16 @@ class PlainSystem {
 
 		// 共通処理
 		// if (false) {
-		$this->common = new domain($this);
+		new domain($this);
 		echo 'kakunin:'.$this->test;
 		// }
 		// //　単一
 		// swicth() {
 		//     case 'katakana':
-		$this->unique = new katakana($this);
+		new katakana($this);
 		//     break;
 		//     case 'hiragana':
-		$this->unique = new hiragana($this);
+		new hiragana($this);
 		//     break;
 		// }
 		// // 画面出力
