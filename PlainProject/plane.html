@@ -5,7 +5,54 @@
 	<title></title>
 </head>
 <body>
+
 <article>
+<style type="text/css" media="screen">
+table * {
+	border: 1px solid green;
+}
+th {
+	background-color: green;
+	font-weight: bold;
+	color:red;
+}
+</style>>
+<h1>管理値</h1>
+<table>
+<?php foreach ($property['read'] as $key => $value) { ?>
+	<tr>
+	<th><?php echo $key ?></th>
+		<?php foreach ($value as $k => $v) { ?>
+			<td><?php  echo $k.':'.$v;  ?></td>
+		<?php } ?>
+	</tr>
+<?php } ?>
+</table>
+<textarea name="mysql" style="width:100%;height:50em;background-color:black;color:white"><?php var_dump($_POST); ?></textarea>
+</form>
+
+</article>
+
+<form method="POST">
+<select name="MODEL[01][db]">
+<option value="">----</option>
+<?php for ($i=0; $i < count($mysql_text['01']['db']); $i++) {?>
+<option value="<?php echo $mysql_text['01']['db'][$i] ?>"><?php echo $mysql_text['db'][$i] ?></option>
+<?php } ?>
+</select>
+
+<select name="MODEL[01][tb]">
+<option value="">----</option>
+<?php for ($i=0; $i < count($mysql_text['tb']); $i++) {?>
+<option value="<?php echo $mysql_text['tb'][$i] ?>"><?php echo $mysql_text['tb'][$i] ?></option>
+<?php } ?>
+<input type="submit" value="READ">
+
+</select>
+
+
+
+<!--<article>
 <h1>シャケだー</h1>
 おんどりゃ︎
 <textarea name="mysql" style="width:100%;height:10em;"><?php echo $mysql_text['resoce']; ?></textarea>
@@ -58,7 +105,7 @@
 <h1>POST</h1>
 <textarea name="mysql" style="width:100%;height:10em;"><?php var_dump($_POST); ?></textarea>
 </form>
-</article>
+</article>-->
 
 </body>
 </html>
