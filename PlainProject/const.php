@@ -17,6 +17,8 @@ const LOGIN = '01';
 
 // is Step is model
 // step　is Warranty scope
+// 0.initialize?
+const STEP00 = '00';
 // 1.notification item
 const STEP01 = '01';
 // 2.check entered and Consistency.
@@ -38,6 +40,9 @@ const MODEL = 'MODEL';
 const ITEM = 'ITEM';
 // Attainment target
 const CODE = 'CODE';
+// STRAGE
+const ERROR  = 'ERROR';
+const STRAGE = 'STRAGE';
 
 class SystemConst {
 	const ROLE = LEVEL0;
