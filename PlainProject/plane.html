@@ -34,22 +34,22 @@ th {
 </article>
 
 <form method="POST">
-<select name="MODEL[01][db]">
-<option value="">----</option>
-<?php for ($i=0; $i < count($mysql_text['01']['db']); $i++) {?>
-<option value="<?php echo $mysql_text['01']['db'][$i] ?>"><?php echo $mysql_text['db'][$i] ?></option>
-<?php } ?>
+<input type="hidden" name="MODEL[01][CODE]" value="04">
+	<select name="MODEL[01][ITEM][db]">
+	<option value="">----</option>
+	<?php for ($i=0; $i < count($mysql_text['01']['db']); $i++) {?>
+	<option value="<?php echo $mysql_text['01']['db'][$i] ?>"><?php echo $mysql_text['db'][$i] ?></option>
+	<?php } ?>
+	</select>
+
+	<select name="MODEL[01][ITEM][tb]">
+	<option value="">----</option>
+	<?php for ($i=0; $i < count($mysql_text['tb']); $i++) {?>
+	<option value="<?php echo $mysql_text['tb'][$i] ?>"><?php echo $mysql_text['tb'][$i] ?></option>
+	<?php } ?>
+	<input type="submit" value="READ">
 </select>
-
-<select name="MODEL[01][tb]">
-<option value="">----</option>
-<?php for ($i=0; $i < count($mysql_text['tb']); $i++) {?>
-<option value="<?php echo $mysql_text['tb'][$i] ?>"><?php echo $mysql_text['tb'][$i] ?></option>
-<?php } ?>
-<input type="submit" value="READ">
-
-</select>
-
+</form>
 
 
 <!--<article>

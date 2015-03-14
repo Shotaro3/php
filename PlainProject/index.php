@@ -1,82 +1,116 @@
 <?php
-
+ini_set('display_errors', 1);
+ini_set('log_errors', 'On');
 /////////////////////////////////////////////////////////////
 require_once (dirname(__FILE__).'/module/db.php');
 require_once (dirname(__FILE__).'/const.php');
 require_once (dirname(__FILE__).'/lib/smarty/libs/Smarty.class.php');
 $vew = new Smarty();
 
-$doc = new Document('debug');
+$XXXX = new XXXXXX();
 
-new work($doc);
+new work($XXXX);
 
 // read on file
 require_once (dirname(__FILE__).'/plane.html');
 /////////////////////////////////////////////////////////////
 
-class document {
+class XXXXXX {
 	private $values;
+	private $report;
 
 	public function __construct() {
-		$this->values['USR']          = $_REQUEST;
+		$this->values['USR']          = $_REQUEST[MODEL];
 		$this->values['SYS']['SHELL'] = $_ENV['SHELL'];
 		$this->values['SYS']['USER']  = $_ENV['USER'];
+	}
 
-		var_dump($this->values);
+	public function getDocument($type) {
+		$document;
+		$document = $this->values['USR'][$type];
+		return $document;
+	}
+
+	public function setReport($report) {
+		$this->report = $report;
 	}
 }
 
 class work {
-	const ROLE = 'MODEL';
-	const CODE = '01';
-	const BIND = 'db,tb';
+	const ROLE = LOGIN;
+	const ITEM = 'u_name,u_pswd';
 
-	// is global in class variable
-	// bind to key on material value
 	private $strage;
-
 	private $report;
 
-	public function __construct($material) {
-		$this->strage = $material[self::ROLE][self::CODE];
+	public function __construct($root_model) {
+		//parent::initialize start
+		$this->strage = $root_model->getDocument(self::ROLE);
+		$code         = intval($this->strage[CODE]);
+		$property     = $this->strage[ITEM];
+		//parent::initialize end
 
-		$this->step1() or $this->stepX(1);
-		// $this->step2() or $this->stepX();
-		// $this->step3() or $this->stepX();
-		// $this->step4() or $this->stepX();
-		//$material = $this->report;
+		// parent::script start
+		if (1 <= $code) {
+			$this->step01();
+		}
+		if (2 <= $code) {
+			$this->step02();
+		}
+		if (3 <= $code) {
+			$this->step03();
+		}
+		if (4 <= $code) {
+			$this->step04();
+		}
+		$root_model->setReport($this->stepXX());
+		// parent::script end
+
+		var_dump($this->strage);
 	}
 
-	private function step1() {
-		$flg = true;
-		// check
-		$flg = (implode($this->strage)) != ''?true:false;
+	private function step01() {
+		echo '<br>1.エラーなしなら項目になんらかのデータがあることを保証します<br>';
 
-		return false;
+		if (false) {
+			$this->error = STEP01;
+		}
+
 	}
 
-	// private function step2(){
-	// 	$flg = true;
-	// 	$this->value[MODEL_CODE]['chack'] = $flg;
-	// }
+	private function step02() {
+		echo '<br>2.エラーなしなら項目のデータの形式を保証します<br>';
 
-	// // create
-	// private function step3(){
-	// 	$flg = true;
-	// 	$this->value[MODEL_CODE]['create'] = ;
-	// }
+		$this->report[ITEM] = self::ITEM;
+		$this->report[CODE] = STEP04;
 
-	// // output
-	// private function step4(){
-	// 	$flg = true;
-	// 	$this->value[MODEL_CODE]['ask'] = $ask;
+		if (false) {
+			$this->error = STEP02;
+		}
+	}
 
-	// 	return $flg;
-	// }
+	// create
+	private function step03() {
+	}
+
+	// output
+	private function step04() {
+		echo '<br>3.エラーなしなら処理完了を保証します<br>';
+
+		$this->report[ITEM] = self::ITEM;
+		$this->report[CODE] = 'FIX';
+	}
 
 	// error
-	private function stepX($step_code) {
-		$report['REPORT']["error"][self::ROLE][self::CODE] = $step_code;
+	private function stepXX() {
+		echo '<br>XX.報告書を作成、処理結果通知・処理に必要な項目の通知<br>';
+
+		if (!empty($this->error)) {
+			$this->report[ERROR]    = true;
+			$this->report[PROPERTY] = $this->strage;
+		}
+
+		return $report[MODEL][self::ROLE] = $this->report;
 	}
 
 }
