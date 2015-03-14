@@ -1,12 +1,30 @@
 <?php
 
+/////////////////////////////////////////////////////////////
 require_once (dirname(__FILE__).'/module/db.php');
-$report = $_REQUEST;
+require_once (dirname(__FILE__).'/const.php');
+require_once (dirname(__FILE__).'/lib/smarty/libs/Smarty.class.php');
+$vew = new Smarty();
 
-new work($report);
+$doc = new Document('debug');
 
-var_dump($report);
+new work($doc);
+
+// read on file
 require_once (dirname(__FILE__).'/plane.html');
+/////////////////////////////////////////////////////////////
+
+class document {
+	private $values;
+
+	public function __construct() {
+		$this->values['USR']          = $_REQUEST;
+		$this->values['SYS']['SHELL'] = $_ENV['SHELL'];
+		$this->values['SYS']['USER']  = $_ENV['USER'];
+
+		var_dump($this->values);
+	}
+}
 
 class work {
 	const ROLE = 'MODEL';
