@@ -17,15 +17,19 @@ const LOGIN = '01';
 
 // is Step is model
 // step　is Warranty scope
-// 1.check entered.
+// 1.notification item
 const STEP01 = '01';
-// 2.check Consistency.
+// 2.check entered and Consistency.
+//   compare master data from input users.
 const STEP02 = '02';
-// 3.compare database from input users. exec action.
+// 3.consent got
 const STEP03 = '03';
-// 4.atoshori toka
+// 4.exec action.
 const STEP04 = '04';
-// create items reinput or next view.
+// work end
+const STEP_END = '99';
+
+// 5.report create and next code
 const STEPXX = 'XX';
 
 // kijyun

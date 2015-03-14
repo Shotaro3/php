@@ -17,12 +17,21 @@ require_once (dirname(__FILE__).'/plane.html');
 
 class XXXXXX {
 	private $values;
+	private $view_param;
 	private $report;
 
 	public function __construct() {
 		$this->values['USR']          = $_REQUEST[MODEL];
 		$this->values['SYS']['SHELL'] = $_ENV['SHELL'];
 		$this->values['SYS']['USER']  = $_ENV['USER'];
+
+		// view param format create
+		// ...code
+	}
+
+	// [MODEL][ITEM]...
+	public function setViewParam($param) {
+		$this->view_param = $param;
 	}
 
 	public function getDocument($type) {
@@ -32,18 +41,24 @@ class XXXXXX {
 	}
 
 	public function setReport($report) {
-		$this->report = $report;
+		$this->report[] = $report;
 	}
 }
 
 class work {
-	const ROLE = LOGIN;
-	const ITEM = 'u_name,u_pswd';
+	const ROLE      = LOGIN;
+	const ITEM_CODE = 'u_name,u_pswd';
+	const DM        = ',';
 
 	private $strage;
 	private $report;
+	private $item_code;
 
 	public function __construct($root_model) {
+		//this->initialize start
+
+		//this->initialize end
+
 		//parent::initialize start
 		$this->strage = $root_model->getDocument(self::ROLE);
 		$code         = intval($this->strage[CODE]);
@@ -66,51 +81,66 @@ class work {
 		$root_model->setReport($this->stepXX());
 		// parent::script end
 
-		var_dump($this->strage);
+		var_dump($this->stepXX());
 	}
 
-	private function step01() {
-		echo '<br>1.エラーなしなら項目になんらかのデータがあることを保証します<br>';
+	protected function step01() {
+		echo '<br>1.エラーなしなら項目の出力が可能です<br>';
+		$this->strage['create'][ITEM] = explode(self::DM, self::ITEM_CODE);
 
 		if (false) {
 			$this->error = STEP01;
-		}
+		} else {
 
+		}
 	}
 
-	private function step02() {
+	//
+	protected function step02() {
+		echo '<br>1.エラーなしなら項目になんらかのデータがあることを保証します<br>';
 		echo '<br>2.エラーなしなら項目のデータの形式を保証します<br>';
-
-		$this->report[ITEM] = self::ITEM;
-		$this->report[CODE] = STEP04;
 
 		if (false) {
 			$this->error = STEP02;
+		} else {
+
+		}
+	}
+
+	// validata
+	protected function step03() {
+		echo '<br>3.同意を確認したことを保証します<br>';
+
+		if (false) {
+			$this->error = STEP03;
+		} else {
+
 		}
 	}
 
 	// create
-	private function step03() {
+	protected function step04() {
+		echo '<br>4.エラーなしなら処理完了を保証します<br>';
+
+		if (false) {
+			$this->error = STEP04;
+		} else {
+			$this->report[CODE] = STEP_END;
+		}
 	}
 
 	// output
-	private function step04() {
-		echo '<br>3.エラーなしなら処理完了を保証します<br>';
-
-		$this->report[ITEM] = self::ITEM;
-		$this->report[CODE] = 'FIX';
-	}
-
-	// error
-	private function stepXX() {
+	protected function stepXX() {
 		echo '<br>XX.報告書を作成、処理結果通知・処理に必要な項目の通知<br>';
+		$report;
 
 		if (!empty($this->error)) {
 			$this->report[ERROR]    = true;
 			$this->report[PROPERTY] = $this->strage;
 		}
-
-		return $report[MODEL][self::ROLE] = $this->report;
+		$this->report[ITEM]        = $this->strage['create'];
+		$report[MODEL][self::ROLE] = $this->report;
+		return $report;
 	}
 
 }
