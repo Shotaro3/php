@@ -4,7 +4,6 @@ abstract class CommonControler {
 	public function __construct($param) {
 
 		$this->step00($param);
-
 		$code = intval($param[CODE]);
 
 		if (1 <= $code) {
@@ -22,6 +21,7 @@ abstract class CommonControler {
 		return $this->stepXX();
 	}
 
+	abstract function step00($param);
 	abstract function step01();
 	abstract function step02();
 	abstract function step03();
@@ -31,7 +31,7 @@ abstract class CommonControler {
 			$this->report[ERROR]  = $this->error;
 			$this->report[STRAGE] = $this->strage;
 		}
-		$rpt           = $this->strage['create'];
+		$this->report  = $this->strage['create'];
 		$rpt['report'] = $this->report;
 		print_r($rpt);
 		return $rpt;
