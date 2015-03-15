@@ -1,6 +1,6 @@
 <?php
 
-abstract class CommonControler {
+abstract class CommonController {
 	public function __construct($param) {
 
 		$this->step00($param);

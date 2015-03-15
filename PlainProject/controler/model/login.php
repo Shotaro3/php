@@ -2,7 +2,7 @@
 // kari
 require_once ('/Applications/MAMP/htdocs/php/PlainProject/controler/controler.php');
 
-class work extends CommonControler {
+class work extends CommonController {
 	const ROLE      = LOGIN;
 	const ITEM_CODE = 'u_name,u_pswd';
 	const DM        = ',';
@@ -11,8 +11,10 @@ class work extends CommonControler {
 	public $strage;
 	public $report;
 	public $item_code;
+	private $db;
 
 	public function __construct($param) {
+
 		parent::__construct($param);
 	}
 
@@ -21,6 +23,9 @@ class work extends CommonControler {
 		echo '<br>0.モデルのデータを作成します　ふわっと<br>';
 		$this->strage                 = $param;
 		$this->strage['create'][ROLE] = self::ROLE;
+
+		$this->db = new Mysql();
+		$this->db->setProperty();
 
 		// $this->item = [
 		// 	self::ROLE . self::DM . self::
