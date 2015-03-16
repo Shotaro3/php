@@ -1,15 +1,8 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('log_errors', 'On');
-require_once (dirname(__FILE__).'/const.php');
-require_once (dirname(__FILE__).'/lib/smarty/libs/Smarty.class.php');
-require_once (dirname(__FILE__).'/controller/controller.php');
-// require_once (dirname(__FILE__).'/controller/model/login.php');
-require_once (dirname(__FILE__).'/module/db.php');
-
 class PlainDomain extends CommonController {
 	const ROLE = LEVEL0;
 	const TYPE = SYSTEM;
+
 	public $strage;
 	public $error;
 	public $report;
@@ -17,8 +10,9 @@ class PlainDomain extends CommonController {
 
 	public function __construct() {
 		for ($i = 1; $i <= 4; $i++) {
-			$this->step = sprintf("%02d", $i);
-			parent::__construct($this->step);
+			$this->step   = sprintf("%02d", $i);
+			$this->report = parent::__construct($this->step);
+			print_r($this->report);
 
 			// $this->error and die();
 		}
@@ -48,7 +42,7 @@ class PlainDomain extends CommonController {
 	public function step04() {
 
 		// read on file
-		require_once (dirname(__FILE__).'/plane.html');
+		require_once ('/Applications/MAMP/htdocs/PHP/PlainProject/plane.html');
 	}
 
 	// [MODEL][ITEM]...
@@ -70,7 +64,3 @@ class PlainDomain extends CommonController {
 		// return $document;
 	}
 }
-/////////////////////////////////////////////////////////////
-new PlainDomain();
-
-/////////////////////////////////////////////////////////////

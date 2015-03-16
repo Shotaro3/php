@@ -49,7 +49,6 @@ abstract class CommonController {
 		}
 		$this->report  = $this->strage['create'];
 		$rpt['report'] = $this->report;
-		print_r($rpt);
 		return $rpt;
 	}
 

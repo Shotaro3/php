@@ -13,15 +13,13 @@ class LoginControle extends CommonController {
 	private $db;
 
 	public function __construct($document) {
-
+		$this->strage = $document;
 		parent::__construct($document[SYSTEM][CODE]);
 	}
 
 	// initialize
-	public function step00($param) {
+	public function step00() {
 		echo '<br>0.モデルのデータを作成します　ふわっと<br>';
-		// $this->strage                 = $document;
-		// $this->strage['create'][ROLE] = self::ROLE;
 
 		// $this->db = new Mysql();
 		// $this->db->setProperty();
