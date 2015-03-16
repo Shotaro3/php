@@ -3,7 +3,8 @@ ini_set('display_errors', 1);
 ini_set('log_errors', 'On');
 require_once (dirname(__FILE__).'/const.php');
 require_once (dirname(__FILE__).'/lib/smarty/libs/Smarty.class.php');
-class XXXXXX {
+
+class PlainSystem extends commonController {
 	private $values;
 	private $view_param;
 	private $report;
@@ -12,9 +13,28 @@ class XXXXXX {
 		$this->values['USR']          = $_REQUEST[MODEL];
 		$this->values['SYS']['SHELL'] = $_ENV['SHELL'];
 		$this->values['SYS']['USER']  = $_ENV['USER'];
-
 		// view param format create
 		// ...code
+	}
+	// initiarize
+	public function step00() {
+
+	}
+	// overhead processing
+	public function step01() {
+
+	}
+	// proper noun process
+	public function step02() {
+
+	}
+	// create master code
+	public function step03() {
+
+	}
+	// 1whrow view
+	public function step04() {
+
 	}
 
 	// [MODEL][ITEM]...
