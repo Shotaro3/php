@@ -2,19 +2,25 @@
 
 const DS = DIRECTORY_SEPARATOR;
 
-const USR = 'USER';
-const SYS = 'SYSTEM';
+const USER   = 'USER';
+const SYSTEM = 'SYSTEM';
 
 // is all in Class role
 // ROLE-STEP3=>LOGIN-01 ...compare user input and db befor re iunput or next view LOGINs
 // system level
 const ROLE = 'ROLE';
+const CODE = 'CODE';
+const STEP = 'STEP';
+const TYPE = 'TYPE';
 
-const LEVEL0 = 'INFRA';
-const SYSTEM = '01';
-const LEVEL2 = 'DOMAIN';
-const LOGIN  = '01';
-const LEVEL3 = 'MODEL';
+const LEVEL0      = 'INFRA';
+const ROOT        = '01';
+const LEVEL1      = 'DOMAIN';
+const LOGIN       = '01';
+const LOGIN_CHECK = '01';
+const LOGIN_ON    = '02';
+const LOGIN_OUT   = '03';
+const LEVEL2      = 'MODEL';
 
 // is Step is model
 // step　is Warranty scope
@@ -33,15 +39,17 @@ const STEP04 = '04';
 const STEP_END = '99';
 // 5.report create and next code
 const STEPXX = 'XX';
+// RUN is All ACTION
+const ALL_STEP = 4;
 
 // kijyun
-const MODEL = 'MODEL';
+const DOMAIN = 'DOMAIN';
+const MODEL  = 'MODEL';
 // data item. example tag attribute  is name
 const ITEM = 'ITEM';
-// Attainment target
-const CODE = 'CODE';
 
 // model in memory type
+const RESULT = 'RESULT';
 const STRAGE = 'STRAGE';
 const ERROR  = 'ERROR';
 const REPORT = 'REPORT';

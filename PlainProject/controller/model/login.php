@@ -12,9 +12,9 @@ class LoginControle extends CommonController {
 	public $item_code;
 	private $db;
 
-	public function __construct($document) {
-		$this->strage = $document;
-		parent::__construct($document[SYSTEM][CODE]);
+	public function __construct($sys) {
+		$this->strage = $$sys->blankForm();
+		parent::__construct($document[SYSTEM][CODE][STEP]);
 	}
 
 	// initialize
@@ -64,6 +64,19 @@ class LoginControle extends CommonController {
 	// create
 	public function step04() {
 		echo '<br>4.エラーなしなら処理完了を保証します<br>';
+
+		switch ($this->strage[SYSTEM][CODE][TYPE]) {
+			case LOGIN_CHECK:
+				// ログインの有無
+				BREAK;
+			case LOGIN_ON:
+				// ログイン
+				BREAK;
+			case LOGIN_OUT:
+				// ログアウト
+				BREAK;
+
+		}
 
 		// if (false) {
 		// 	$this->error = STEP04;
