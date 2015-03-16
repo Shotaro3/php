@@ -12,8 +12,8 @@ class LoginControle extends CommonController {
 	public $item_code;
 	private $db;
 
-	public function __construct($sys) {
-		$this->strage = $$sys->blankForm();
+	public function __construct($document) {
+		$this->strage = $document;
 		parent::__construct($document[SYSTEM][CODE][STEP]);
 	}
 
