@@ -20,7 +20,7 @@ abstract class CommonController {
 		return $this->stepXX($object);
 	}
 
-	private function step00($object){
+	private function step00($object) {
 		$this->strage = $object->getCode();
 		// [
 		// 	CODE => ITEM,
