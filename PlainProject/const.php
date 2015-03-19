@@ -5,54 +5,30 @@ const DS = DIRECTORY_SEPARATOR;
 const USER   = 'USER';
 const SYSTEM = 'SYSTEM';
 
-// is all in Class role
-// ROLE-STEP3=>LOGIN-01 ...compare user input and db befor re iunput or next view LOGINs
-// system level
-const ROLE = 'ROLE';
-const CODE = 'CODE';
-const STEP = 'STEP';
-const TYPE = 'TYPE';
+const ROLE = 'ROLE';// 役割
 
-const LEVEL0      = 'INFRA';
-const ROOT        = '01';
-const LEVEL1      = 'DOMAIN';
-const LOGIN       = '01';
-const LOGIN_CHECK = '01';
-const LOGIN_ON    = '02';
-const LOGIN_OUT   = '03';
-const LEVEL2      = 'MODEL';
+const STEP = 'STEP';// 同一オブジェクトのメソッドを複数使う場合(上位のレイヤー)用
+const CODE = 'CODE';// モデル・ドメインのできること
+const ITEM = 'ITEM';// コード実行の材料
 
-// is Step is model
-// step　is Warranty scope
-// 0.initialize?
-const STEP00 = '00';
-// 1.notification item
-const STEP01 = '01';
-// 2.check entered and Consistency.
-//   compare master data from input users.
-const STEP02 = '02';
-// 3.consent got
-const STEP03 = '03';
-// 4.exec action.
-const STEP04 = '04';
-// work end
-const STEP_END = '99';
-// 5.report create and next code
-const STEPXX = 'XX';
-// RUN is All ACTION
-const ALL_STEP = 4;
+const LAYER  = 'LAYER';//  階層
+const DOMAIN = 'DOMAIN';// ユビキタス　仕様の実装　複数種類のモデルを利用したフローを作成
+const MODEL  = 'MODEL';//  モデル　　　分野ごとの処理を慣用な形に組む　複数種類のモジュールのフローを作成
+const LOGIN  = 'LOGIN';
+const LOGOUT = 'LOGOUT';
 
-// kijyun
-const DOMAIN = 'DOMAIN';
-const MODEL  = 'MODEL';
-// data item. example tag attribute  is name
-const ITEM = 'ITEM';
+const STEP_START = '0';
+const STEP01     = '1';
+const STEP02     = '2';
+const STEP03     = '3';
+const STEP_END   = '9';
 
-// model in memory type
-const RESULT = 'RESULT';
+// コントローラ上でサブクラスのデータを扱う為の抽象データのくくり
 const STRAGE = 'STRAGE';
-const ERROR  = 'ERROR';
-const REPORT = 'REPORT';
+// コントローラから呼び出し元に報告するデータのくくり
+const RESULT  = 'REPORT';
+const EXECUTE = 'EXECUTE';// コード実行結果 bool
+//               ITEM
 
 // VIEW
 // Type code
@@ -68,7 +44,7 @@ const DATE   = '03';
 const TYPE_PSWD = 'password';
 const TYPE_TEXT = 'text';
 
-class SystemConst {
+class body {
 	const ROLE = LEVEL0;
 
 	public function __construct() {

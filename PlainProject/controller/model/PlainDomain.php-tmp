@@ -2,7 +2,7 @@
 class  extends CommonController {
 
 	// notification this model code
-	const READ = 1;
+	const READ   = 1;
 	const CREATE = 2;
 	const UPDATA = 3;
 	const DELETE = 4;
@@ -32,7 +32,7 @@ class  extends CommonController {
 			case DELETE:
 				# code...
 				break;
-			
+
 			default:
 				# code...
 				break;
