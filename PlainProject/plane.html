@@ -3,109 +3,41 @@
 <head>
 	<meta charset="utf-8">
 	<title></title>
+
+
+<style>
+section.param[login][name]>*,section.param[login][name]>*{
+float:top;
+}
+
+</style>
 </head>
 <body>
 
-<article>
-<style type="text/css" media="screen">
-table * {
-	border: 1px solid green;
-}
-th {
-	background-color: green;
-	font-weight: bold;
-	color:red;
-}
-</style>>
-<h1>管理値</h1>
-<table>
-<?php foreach ($property['read'] as $key => $value) { ?>
-	<tr>
-	<th><?php echo $key ?></th>
-		<?php foreach ($value as $k => $v) { ?>
-			<td><?php  echo $k.':'.$v;  ?></td>
-		<?php } ?>
-	</tr>
-<?php } ?>
-</table>
-<textarea name="mysql" style="width:100%;height:50em;background-color:black;color:white"><?php var_dump($_POST); ?></textarea>
-</form>
-
+<article id="header">
 </article>
+
+<article id="contents">
 
 <form method="POST">
-<input type="hidden" name="MODEL[01][CODE]" value="04">
-	<select name="MODEL[01][ITEM][db]">
-	<option value="">----</option>
-	<?php for ($i=0; $i < count($mysql_text['01']['db']); $i++) {?>
-	<option value="<?php echo $mysql_text['01']['db'][$i] ?>"><?php echo $mysql_text['db'][$i] ?></option>
-	<?php } ?>
-	</select>
+<section class="param[login][name]">
+	<label for="param[login][name]"><span>NAME</span></label>
+	<input type="text" id="param[login][name]" name="param[login][name]" />
+</section>
 
-	<select name="MODEL[01][ITEM][tb]">
-	<option value="">----</option>
-	<?php for ($i=0; $i < count($mysql_text['tb']); $i++) {?>
-	<option value="<?php echo $mysql_text['tb'][$i] ?>"><?php echo $mysql_text['tb'][$i] ?></option>
-	<?php } ?>
-	<input type="submit" value="READ">
-</select>
+<section class="param[login][pswd]">
+	<label for="param[login][pswd]"><span>PSWD</span></label>
+	<input type="text" id="param[login][pswd]" name="param[login][pswd]" />
+</section>
+
+<input type="submit" vlaue="送信">
+
 </form>
 
-
-<!--<article>
-<h1>シャケだー</h1>
-おんどりゃ︎
-<textarea name="mysql" style="width:100%;height:10em;"><?php echo $mysql_text['resoce']; ?></textarea>
-サクセス‼︎
-<textarea name="mysql" style="width:100%;height:10em;"><?php echo var_dump($mysql_text); ?></textarea>
-じゃない︎
-<textarea name="mysql" style="width:100%;height:10em;"><?php echo $mysql_text['error']; ?></textarea>
-
-<form method="POST">
-<select name="database">
-<?php for ($i=0; $i < count($mysql_text['database']); $i++) {?>
-<option value="<?php echo $mysql_text['database'][$i] ?>"><?php echo $mysql_text['database'][$i] ?></option>
-<?php } ?>
-</select>
-
-<select name="table">
-<?php for ($i=0; $i < count($mysql_text['table']); $i++) {?>
-<option value="<?php echo $mysql_text['table'][$i] ?>"><?php echo $mysql_text['table'][$i] ?></option>
-<?php } ?>
-</select>
-
-<input type="submit" value="USE DB">
-</form>>
 
 </article>
 
-<article>
-<form action="./index.php" method="post" accept-charset="utf-8">
-<h1>SHELL COMMAND</h1>
-<input type="text" name="command" value=""/>
-<input type="submit" value="Go" accesskey="C">
-</form>
+<article id="footer">
 </article>
-
-<article>
-<h1>入力フォーム</h1>
-<form action="./index.php" method="post" accept-charset="utf-8">
-<ul>
-	<li><input type="text" name="input[text]" value="" /></li>
-	<li><input type="radio" name="input[radio]" value="" /></li>
-	<li><input type="button" name="input[button]" value="ボタン" /></li>
-	<li>text</li>
-	<li>text</li>	
-</ul>
-<input type="submit" value="GoToHELL">
-</form>
-</article>
-
-<article>
-<h1>POST</h1>
-<textarea name="mysql" style="width:100%;height:10em;"><?php var_dump($_POST); ?></textarea>
-</form>
-</article>-->
-
 </body>
 </html>
