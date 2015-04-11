@@ -1,15 +1,9 @@
 <?php
 
-class FileUtility {
+class FileWrite {
 
-	private $file_name;
-
-	public function __construct($file_name) {
-		$this->file_name = $file_name;
-	}
-
-	protected function write($text) {
-		if ($fp = fopen($this->file_name, "a")) {
+	public function __construct($file_name, $text) {
+		if ($fp = fopen($file_name, "a")) {
 
 			flock($fp, LOCK_SH);
 

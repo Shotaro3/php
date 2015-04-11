@@ -1,11 +1,11 @@
 <?php
 
-class ProjectConfig {
+define('STG', 'stg');
+define('WWW', 'www');
 
-	const DB_HOST = 'localhost';
-	const DB_NAME = 'plain';
-	const DB_USER = 'root';
-	const DB_PSWD = 'root';
+define('MODE', STG);
+
+class ProjectConfig {
 
 	/**
 	 * ログファイル
@@ -17,6 +17,25 @@ class ProjectConfig {
 	 **/
 	const DIR_LOG = '/Applications/MAMP/htdocs/php/PlainProject/logs/';
 
+}
+
+trait DatabaseProperty {
+	private function setConfig() {
+		switch (MODE) {
+			case WWW:
+				# code...
+				break;
+			case STG:
+				$this->HOST    = 'localhost';
+				$this->DB_NAME = 'plain';
+				$this->USER    = 'root';
+				$this->PSWD    = 'root';
+				break;
+			default:
+				# code...
+				break;
+		}
+	}
 }
 
 class code {
