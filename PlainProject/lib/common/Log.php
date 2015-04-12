@@ -2,7 +2,7 @@
 
 trait Log {
 
-	public static function write($method, $data) {
+	public static function LogWrite($method, $data) {
 		$file_name = ProjectConfig::DIR_LOG.ProjectConfig::FILE_LOG_ALL;
 		$line      = self::ganareteLogText($method, $data);
 

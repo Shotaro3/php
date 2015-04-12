@@ -12,8 +12,9 @@ require_once (dirname(__FILE__).'/module/db.php');
 require_once (dirname(__FILE__).'/controller/model/commonDAO.php');
 require_once (dirname(__FILE__).'/controller/model/userDAO.php');
 
-new UserDAO();
-
+$user = new UserDAO();
+$user->execute(UserDAO::DELETE_TABLES);
+$user->execute(UserDAO::CREATE_TABLES);
 /////////////////////////////////////////////////////////////
 require_once ('/Applications/MAMP/htdocs/PHP/PlainProject/plane.html');
 

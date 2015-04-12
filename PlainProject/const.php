@@ -37,9 +37,7 @@ trait DatabaseProperty {
 		}
 	}
 }
-
-class code {
-
-	const NON = false;
-
+class DbCode {
+	const int     = 'int';
+	const varchar = 'varchar(20)';
 }
